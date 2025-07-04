@@ -4,11 +4,13 @@ import ProfilePage from './pages/ProfilePage'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { UserProvider } from "./context/UserContext"
 import ProductView from './components/ProductView'
+import { ToastContainer } from "react-toastify"
 
 function App() {
 
  return(
   <UserProvider>
+    <ToastContainer theme="dark" />
   <Router>
     <Routes>
       <Route path="/" element={<HomePage/>}/>

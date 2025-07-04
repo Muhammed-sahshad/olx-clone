@@ -1,6 +1,7 @@
 import { useState } from "react";
 import close_icon from "../assets/close_icon.svg";
 import { registerUser, loginUser } from "../firebase";
+import { toast } from "react-toastify";
 interface LoginProps {
   setLoginForm: (val: boolean) => void;
 }
@@ -10,7 +11,6 @@ const Login = ({ setLoginForm }: LoginProps) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [username, setUsername] = useState<string>("");
-  const [error, setError] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,10 +23,10 @@ const Login = ({ setLoginForm }: LoginProps) => {
       }
       setLoginForm(false);
     } catch (err: any) {
-      const firebaseErrorMessage =
+      const firebaseErrorMessage: string =
         err.code.split("/")[1].split("-").join(" ") || "Failed to authenticate. Please try again.";
       console.log(err);
-      setError(firebaseErrorMessage);
+      toast.error(firebaseErrorMessage)
     }
   };
 
@@ -78,8 +78,6 @@ const Login = ({ setLoginForm }: LoginProps) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-
-        {error && <p className="text-red-500 text-sm">{error}</p>}
 
         <button type="submit" className="bg-black text-white p-2 rounded-md mt-3">
           {loginState}
